@@ -4,8 +4,7 @@ import aiofiles
 import aiohttp
 
 
-async def get_matrix_from_url(url: str) -> str:
-
+async def _get_matrix_from_url(url: str) -> str:
     try:
         async with aiohttp.ClientSession() as session:
             async with session.get(url) as response:
@@ -13,11 +12,11 @@ async def get_matrix_from_url(url: str) -> str:
                 matrix_data = await response.text()
                 return matrix_data
 
-    except (aiohttp.ClientConnectionError, aiohttp.ClientResponseError, aiohttp.ServerConnectionError) as error:
+    except (aiohttp.ClientConnectionError, aiohttp.ClientResponseError, aiohttp.ServerConnectionError, aiohttp.ClientConnectorError) as error:
         raise error(f"{type(error).__name__}: {error}")
 
 
-async def get_matrix_from_file(filepath: str) -> str:
+async def _get_matrix_from_file(filepath: str) -> str:
     if not filepath.endswith(".txt"):
         raise ValueError("Given file must have .txt extension!")
 
@@ -26,12 +25,12 @@ async def get_matrix_from_file(filepath: str) -> str:
         return content
 
 
-async def transform_matrix_to_normal(url: str = None, filepath: str = None) -> list[list[int]]:
+async def _transform_matrix_to_normal(url: str = None, filepath: str = None) -> list[list[int]]:
     matrix_data = ""
     if url:
-        matrix_data = await get_matrix_from_url(url)
+        matrix_data = await _get_matrix_from_url(url)
     elif filepath:
-        matrix_data = await get_matrix_from_file(filepath)
+        matrix_data = await _get_matrix_from_file(filepath)
 
     formatted_matrix = []
     split_text = matrix_data.strip().split("\n")

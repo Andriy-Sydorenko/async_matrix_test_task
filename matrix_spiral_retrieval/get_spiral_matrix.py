@@ -1,8 +1,8 @@
-from matrix_spiral_retrieval.utils import transform_matrix_to_normal
+from matrix_spiral_retrieval._utils import _transform_matrix_to_normal
 
 
 async def get_spiral_list(url: str = None, filepath: str = None):
-    matrix = await transform_matrix_to_normal(url, filepath)
+    matrix = await _transform_matrix_to_normal(url, filepath)
 
     spiral_list = []
     top = 0
