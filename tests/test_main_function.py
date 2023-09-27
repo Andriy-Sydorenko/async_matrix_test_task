@@ -7,6 +7,7 @@ from matrix_spiral_retrieval.get_spiral_matrix import get_spiral_list
 MATRIX_4X4_URL = "https://raw.githubusercontent.com/Andriy-Sydorenko/async_matrix_test_task/develop/tests/testing_examples/matrix_4x4.txt"
 MATRIX_10X10_URL = "https://raw.githubusercontent.com/Andriy-Sydorenko/async_matrix_test_task/develop/tests/testing_examples/matrix_10x10.txt"
 
+
 class TestGetSpiralListFunction:
     @pytest.mark.parametrize(
         "url,filepath,expected_result",
