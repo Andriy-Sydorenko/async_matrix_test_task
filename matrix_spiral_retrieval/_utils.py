@@ -1,4 +1,7 @@
+import asyncio
+import os
 import re
+import traceback
 
 import aiofiles
 import aiohttp
@@ -38,8 +41,12 @@ async def _get_matrix_from_file(filepath: str) -> str:
             content = await file.read()
             return content
 
-    except (IsADirectoryError, FileNotFoundError) as error:
-        raise error
+    except (IsADirectoryError,
+            FileNotFoundError,
+            ValueError,
+            PermissionError) as error:
+        traceback_str = traceback.format_exc()
+        raise type(error)(f"{error}\n{traceback_str}") from error
 
 
 async def _transform_matrix_to_normal(
